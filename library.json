@@ -1,0 +1,20 @@
+{
+  "name": "arduino-pin-api",
+  "keywords": "pin, api, digital, analog",
+  "description": "A concise api for using pin management",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/0xF6/arduino-pin-api.git"
+  },
+  "authors": [
+    {
+      "name": "Yuuki Wesp",
+      "email": "ls-micro@ya.ru",
+      "url": "http://0xf6.moe/",
+      "maintainer": true
+    }
+  ],
+  "version": "1.0.3",
+  "frameworks": "arduino",
+  "platforms": "*"
+}
