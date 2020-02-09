@@ -10,7 +10,7 @@
 </h1>
 <!-- desc -->
 <h4 align="center">
-    A concise api for using pin management
+    A concise api for using pin management with fast mode
 </h4>
 
 <!-- popup badges -->
@@ -84,6 +84,12 @@ const int value = analogRead(TARGET_PIN);
 analogWrite(TARGET_PIN, LOW);
 ```
 
+
+### remarks
+
+```
+fast-mode work only in ATmega328* chips, in future planned more goto-go-fast
+```
 
 
 

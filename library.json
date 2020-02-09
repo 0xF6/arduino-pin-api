@@ -1,7 +1,7 @@
 {
   "name": "arduino-pin-api",
   "keywords": "pin, api, digital, analog",
-  "description": "A concise api for using pin management",
+  "description": "A concise api for using pin management with fast mode",
   "repository": {
     "type": "git",
     "url": "https://github.com/0xF6/arduino-pin-api.git"
