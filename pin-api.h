@@ -5,16 +5,57 @@
 #ifndef __PIN_API__
 #define __PIN_API__
 #include "Arduino.h"
+
+#define Support_AVR \
+    defined(__AVR_ATmega328P__) || \
+    defined(__AVR_ATmega328__) || \
+    defined(__AVR_ATmega328PB__)
+
+
 #define __PIN_API_VERSION__ /* yymmdd */ 200302
 template<unsigned char address>
 class _DIGITAL {
     public:
-        inline void write(unsigned char value) {
+        void write(unsigned char value) {
+            #if Support_AVR
+            this->clearBit(address);
+            if (address < 8) 
+                bitWrite(PORTD, address, value);
+            else if (address < 14)
+                bitWrite(PORTB, (address - 8), value);
+            else if (address < 20)
+                bitWrite(PORTC, (address - 14), value);
+            #else
             digitalWrite(address, value);
+            #endif
         }
         inline int read() {
+            #if Support_AVR
+            if (address < 8)
+                return bitRead(PIND, address);
+            else if (address < 14)
+                return bitRead(PINB, address - 8);
+            else if (address < 20)
+                return bitRead(PINC, address - 14);
+            #else
             return digitalRead(address);
+            #endif
         }
+    protected:
+        #if Support_AVR
+        void clearBit(uint8_t pin) {
+            #define step(caseID, value, bit) case caseID: bitClear(value, bit); break; 
+            switch (pin) {			
+                step(3 , TCCR2A, COM2B1)
+                step(5 , TCCR0A, COM0B1)
+                step(6 , TCCR0A, COM0A1)
+                step(9 , TCCR1A, COM1A1)
+                step(10, TCCR1A, COM1B1)
+                step(11, TCCR2A, COM2A1)
+            }
+            #undef step
+        }
+        #endif
 };
 template<unsigned char address>
 class _ANALOG {
