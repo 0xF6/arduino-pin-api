@@ -12,7 +12,7 @@
     defined(__AVR_ATmega328PB__)
 
 
-#define __PIN_API_VERSION__ /* yymmdd */ 200302
+#define __PIN_API_VERSION__ /* yymmdd */ 201002
 template<unsigned char address>
 class _DIGITAL {
     public:
