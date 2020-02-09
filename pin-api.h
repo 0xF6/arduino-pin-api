@@ -30,7 +30,57 @@ template<unsigned char address>
 class pin {
   public:
     inline void mode(unsigned char flag) {
-      pinMode(address, flag);
+        #if Support_AVR
+        switch (flag) 
+        {
+            case INPUT:
+                if (address < 8) 
+                {
+                    bitClear(DDRD, address);		
+                    bitClear(PORTD, address);
+                } 
+                else if (address < 14) 
+                {
+                    bitClear(DDRB, (address - 8));
+                    bitClear(PORTB, (address - 8));
+                } 
+                else if (address < 20) 
+                {
+                    bitClear(DDRC, (address - 14));
+                    bitClear(PORTC, (address - 8));
+                }
+            return;
+            case OUTPUT:
+                if (address < 8) {
+                    bitSet(DDRD, address);
+                    bitClear(PORTD, address);
+                } else if (address < 14) {
+                    bitSet(DDRB, (address - 8));
+                    bitClear(PORTB, (address - 8));
+                } else if (address < 20) {
+                    bitSet(DDRC, (address - 14));
+                    bitClear(PORTC, (address - 8));
+                }
+            return;
+            case INPUT_PULLUP:
+                if (address < 8) 
+                {
+                    bitClear(DDRD, address);
+                    bitSet(PORTD, address);
+                } 
+                else if (address < 14) {
+                    bitClear(DDRB, (address - 8));
+                    bitSet(PORTB, (address - 8));
+                } 
+                else if (address < 20) {
+                    bitClear(DDRC, (address - 14));
+                    bitSet(PORTC, (address - 14));
+                }
+            return;
+        }
+        #else
+        pinMode(address, flag);
+        #endif
     }
     inline _DIGITAL<address> digital() {
         return _DIGITAL<address>();
